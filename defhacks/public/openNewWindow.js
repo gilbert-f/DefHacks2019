@@ -1,9 +1,8 @@
 var price = document.getElementsByClassName("a-color-price a-size-medium a-text-right a-align-bottom aok-nowrap grand-total-price a-text-bold")[0].innerText;
-var orderTotal = price.toString().substring(1, price.length);
-var name = document.getElementsByClassName("displayAddressLI displayAddressFullName")[0]['innerHTML'];
-var namez = name.split(" ");
+var totalPrice = price.toString().substring(1, price.length);
+var names = document.getElementsByClassName("displayAddressLI displayAddressFullName")[0]['innerHTML'];
+var fullname = names.split(" ");
 var req = new XMLHttpRequest();
-//alert('asd')
 
 var data = {
     "productTypes": [
@@ -11,8 +10,8 @@ var data = {
         "savings"
     ],
     "personalInformation": {
-        "firstName": `${namez[0]}`,
-        "lastName": `${namez[1]}`,
+        "firstName": "Juan",
+        "lastName": "Doe",
         "email": "john1@example.com",
         "city": "New York",
         "state": "NY",
@@ -20,7 +19,7 @@ var data = {
         "zipcode": "98117"
     },
     "loanInformation": {
-        "loanAmount": `${orderTotal}`
+        "loanAmount": 10000
     },
     "creditInformation": {
         "providedCreditRating": "excellent",
@@ -46,19 +45,23 @@ function processRequest(e) {
         var payments = [];
         var aprs = [];
         var logos = [];
+        var terms = [];
+        var links = []
 
         for (i = 0; i < response.loanOffers.length; i++) {
             names.push(response.loanOffers[i].originator.name);
             payments.push(response.loanOffers[i].meanMonthlyPayment);
             aprs.push(response.loanOffers[i].meanApr);
             logos.push(response.loanOffers[i].originator.images[0].url);
+            terms.push(response.loanOffers[i].termLength);
+            links.push(response.loanOffers[i].originator.url);
         }
         console.log(names)
         console.log(payments)
         console.log(aprs)
         console.log(logos)
     } else {
-        alert('fail')
+        //alert('fail')
     }
 }
 
