@@ -4,6 +4,12 @@ var names = document.getElementsByClassName("displayAddressLI displayAddressFull
 var fullname = names.split(" ");
 var req = new XMLHttpRequest();
 
+console.log(price)
+console.log(totalPrice)
+console.log(names)
+console.log(fullname)
+console.log(req)
+
 var data = {
     "productTypes": [
         "loan",
