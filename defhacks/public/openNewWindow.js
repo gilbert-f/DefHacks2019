@@ -1,14 +1,14 @@
-var price = document.getElementsByClassName("a-color-price a-size-medium a-text-right a-align-bottom aok-nowrap grand-total-price a-text-bold")[0].innerText;
-var totalPrice = price.toString().substring(1, price.length);
-var names = document.getElementsByClassName("displayAddressLI displayAddressFullName")[0]['innerHTML'];
-var fullname = names.split(" ");
-var req = new XMLHttpRequest();
+//var price = document.getElementsByClassName("a-color-price a-size-medium a-text-right a-align-bottom aok-nowrap grand-total-price a-text-bold")[0].innerText;
+//var totalPrice = price.toString().substring(1, price.length);
+//var names = document.getElementsByClassName("displayAddressLI displayAddressFullName")[0]['innerHTML'];
+//var fullname = names.split(" ");
+//var req = new XMLHttpRequest();
 
-console.log(price)
-console.log(totalPrice)
-console.log(names)
-console.log(fullname)
-console.log(req)
+//console.log(price)
+//console.log(totalPrice)
+//console.log(names)
+//console.log(fullname)
+//console.log(req)
 
 var data = {
     "productTypes": [
