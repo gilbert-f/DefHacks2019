@@ -6,15 +6,14 @@
  "author": "Indos",
  "browser_action": {
     "default_icon": "icon.png",
-    "default_title": "Open new window",
-    "default_popup": "result-table/index.html"
+    "default_title": "Open new window"
   },
  "content_scripts": [
    {
      "matches": [
         "https://www.amazon.com/gp/buy/spc/handlers/display.html?hasWorkingJavascript=1"
      ],
-     "js": ["content.js"]
+     "js": ["openNewWindow.js"]
    }
  ],
  "permissions": ["activeTab"
