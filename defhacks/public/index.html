@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lend Me</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700'>
+  <link rel="stylesheet" href="css/style.css">
+
+  <style type="text/css">
+  panel pricing-table {
+    min-width: 800px;
+    max-width: 800px;
+    min-height: 600px;
+    max-height: 600px;
+    position: relative;
+    vertical-align:middle;
+  }
+  </style>
+</head>
+
+<body>
+<script>
+	var creditScore = 0;
+	while(creditScore < 200 || creditScore > 850){
+		creditScore = prompt("Please enter your credit score", "700");
+	}
+	var req = new XMLHttpRequest();
+	var arr = window.name.split("@");;
+	var totalOrder = arr[0].replace(',' , '');
+	
+	var firstname = arr[1];
+	var lastname = arr[2];
+	var creditRate = "poor";
+	if(creditScore >= 720){
+		creditRate = "excellent";
+	} else if (creditScore >= 660 && creditScore <=719){
+		creditRate = "good";
+	} else if(creditScore >= 600 && creditScore <= 659){
+		creditRate = "fair";
+	} else {
+		creditRate = "poor";
+	}
+var data = {
+    "productTypes": [
+        "loan",
+        "savings"
+    ],
+    "personalInformation": {
+        "firstName": firstname,
+        "lastName": lastname,
+        "email": "john1@example.com",
+        "city": "New York",
+        "state": "NY",
+        "address1": "45 West 21st Street",
+        "zipcode": "98117"
+    },
+    "loanInformation": {
+        "loanAmount": parseInt(totalOrder)
+    },
+    "creditInformation": {
+        "providedCreditRating": creditRate,
+        "providedNumericCreditScore": parseInt(creditScore)
+    }
+}
+
+req.open("POST", "https://api.evenfinancial.com/leads/rateTables");
+req.withCredentials = true;
+
+req.setRequestHeader("Authorization", "Bearer e7675dd3-ff3b-434b-95aa-70251cc3784b_88140dd4-f13e-4ce3-8322-6eaf2ee9a2d2");
+//req.setRequestHeader('body', data);
+req.setRequestHeader("Content-Type", "application/json");
+
+req.send(JSON.stringify(data));
+req.onreadystatechange = processRequest;
+console.log(req);
+
+function processRequest(e) {
+	if (req.readyState == 4 && req.status == 200) {
+        var response = JSON.parse(req.responseText);
+        console.log(response.loanOffers)
+		var i;
+		var names = [];
+		var payments = [];
+		var aprs = [];
+		var logos = [];
+		var terms = [];
+		var links = []
+		
+		for (i = 0; i < response.loanOffers.length; i++) {
+			if(response.loanOffers[i].meanMonthlyPayment != null && response.loanOffers[i].preApproved == true && response.loanOffers[i].meanApr <= 35 ){
+				names.push(response.loanOffers[i].originator.name);
+				payments.push(response.loanOffers[i].meanMonthlyPayment);
+				aprs.push(response.loanOffers[i].meanApr);
+				logos.push(response.loanOffers[i].originator.images[0].url);
+				if(response.loanOffers[i].termUnit = "month") {
+					terms.push(response.loanOffers[i].termLength);
+				} else if(response.loanOffers[i].termUnit = "day"){
+					terms.push(response.loanOffers[i].termLength/30);
+				}else {
+					terms.push(response.loanOffers[i].termLength*12);
+				}
+				links.push(response.loanOffers[i].url);
+			}
+		}
+		console.log(names);
+		console.log(payments);
+		console.log(aprs);
+		console.log(logos);
+		console.log(links);
+		
+		document.getElementById("img0").src = 'http://'+logos[0];
+		document.getElementById("img1").src = 'http://'+logos[1];
+		document.getElementById("img2").src = 'http://'+logos[2];
+		document.getElementById("name0").innerHTML = names[0];
+		document.getElementById("name1").innerHTML = names[1];
+		document.getElementById("name2").innerHTML = names[2];
+		document.getElementById("pay0").innerHTML = '$'+payments[0]+'/mo';
+		document.getElementById("pay1").innerHTML = '$'+payments[1]+'/mo';
+		document.getElementById("pay2").innerHTML = '$'+payments[2]+'/mo';
+		document.getElementById("apr0").innerHTML = aprs[0] + '% APR';
+		document.getElementById("apr1").innerHTML = aprs[1]+'% APR';
+		document.getElementById("apr2").innerHTML = aprs[2]+'% APR';
+		document.getElementById("term0").innerHTML = 'For '+terms[0] + ' Months';
+		document.getElementById("term1").innerHTML = 'For '+terms[1] + ' Months';
+		document.getElementById("term2").innerHTML = 'For '+terms[2] + ' Months';
+		document.getElementById("link0").href = links[0];
+		document.getElementById("link1").href = links[1];
+		document.getElementById("link2").href = links[2];
+    } else{
+		//alert('fail')
+	}
+}
+  </script>
+  <div class="background">
+  <div class="container">
+    <div class="panel pricing-table">
+      
+      <div class="pricing-plan">
+        <img id='img0' alt="" class="pricing-img">
+        <h2 class="pricing-header" id='name0'></h2>
+        <ul class="pricing-features">
+          <li class="pricing-features-item" id='apr0'></li>
+          <li class="pricing-features-item" id='term0'></li>
+        </ul>
+        <span class="pricing-price" id='pay0'></span>
+        <a id='link0' class="pricing-button">Get Started</a>
+      </div>
+      
+      <div class="pricing-plan">
+        <img id='img1' alt="" class="pricing-img">
+        <h2 class="pricing-header" id='name1'></h2>
+        <ul class="pricing-features">
+          <li class="pricing-features-item" id='apr1'></li>
+          <li class="pricing-features-item" id='term1'></li>
+        </ul>
+        <span class="pricing-price" id='pay1'></span>
+        <a id='link1' class="pricing-button">Get Started</a>
+      </div>
+      
+      <div class="pricing-plan">
+        <img id='img2' alt="" class="pricing-img">
+        <h2 class="pricing-header" id='name2'></h2>
+        <ul class="pricing-features">
+          <li class="pricing-features-item" id='apr2'></li>
+          <li class="pricing-features-item" id='term2'></li>
+        </ul>
+        <span class="pricing-price" id='pay2'></span>
+        <a id='link2' class="pricing-button">Get Started</a>
+      </div>
+      
+    </div>
+  </div>
+</div>
+</body>
+</html>

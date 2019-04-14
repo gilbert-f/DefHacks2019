@@ -16,7 +16,7 @@
      "js": ["openNewWindow.js"]
    }
  ],
- "permissions": ["activeTab"
+ "permissions": [ "activeTab"
   ],
   "icons": {
     "16": "icon.png",
