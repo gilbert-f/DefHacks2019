@@ -10,10 +10,5 @@
    "default_popup": "result-table/index.html"
   },
  "permissions": ["activeTab"
-  ],
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
-  }
+  ]
 }
