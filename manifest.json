@@ -7,7 +7,7 @@
   "browser_action": {
     "default_icon": "icon.png",
    "default_title": "Play",
-   "default_popup": "widget.html"
+   "default_popup": "result-table/index.html"
   },
  "permissions": ["activeTab"
   ],
