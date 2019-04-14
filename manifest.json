@@ -10,5 +10,10 @@
    "default_popup": "result-table/index.html"
   },
  "permissions": ["activeTab"
-  ]
+  ],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
 }
