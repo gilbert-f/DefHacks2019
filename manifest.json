@@ -1,13 +1,13 @@
 {
  "manifest_version": 2,
- "name": "DefHacks",
- "description": "Plugin",
+ "name": "LendMe",
+ "description": "Even Financial Chrome Extension",
  "version": "1",
  "author": "Indos",
   "browser_action": {
     "default_icon": "icon.png",
-   "default_title": "Play",
-   "default_popup": "result-table/index.html"
+    "default_title": "Open new window",
+    "default_popup": "result-table/index.html"
   },
  "permissions": ["activeTab"
   ],
